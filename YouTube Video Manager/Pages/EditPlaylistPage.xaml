@@ -1,0 +1,60 @@
+﻿<Page x:Class="YouTube_Video_Manager.Pages.EditPlaylistPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:YouTube_Video_Manager.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="500"
+      Title="EditPlaylistPage">
+
+
+
+    <DockPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Margin="0,2">
+            <Button Name="SaveButton" Padding="5" Click="SaveButton_Click">Save</Button>
+        </StackPanel>
+
+        <Grid x:Name="Main">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Playlist ID" />
+                        <TextBox x:Name="IDTextBox" Text="{Binding PlaylistID}" IsReadOnly = "True" TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto" />
+                    </StackPanel>
+
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Title" />
+                        <TextBox x:Name="TitleTextBox" Text="{Binding Title}" TextWrapping="Wrap"
+                                 TextChanged="TitleTextBox_TextChanged"
+                                 VerticalScrollBarVisibility="Auto" />
+                        <TextBlock x:Name="TitleCharLimitText" TextAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Description" />
+                        <TextBox x:Name="DescriptionTextBox" Text="{Binding Description}" TextWrapping="Wrap" MinHeight="100"
+                                 AcceptsReturn="True"
+                                 TextChanged="DescriptionTextBox_TextChanged"
+                                 VerticalScrollBarVisibility="Auto" />
+                        <TextBlock x:Name="DescriptionCharLimitText" TextAlignment="Right" Text="{Binding DescriptionCharLimit, NotifyOnTargetUpdated=True}"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Tags" />
+                        <TextBox x:Name="TagsTextBox" Text="{Binding Tags}" TextWrapping="Wrap" MinHeight="50"
+                                 TextChanged="TagsTextBox_TextChanged"
+                                 VerticalScrollBarVisibility="Auto" />
+                        <TextBlock x:Name="TagsCharLimitText" TextAlignment="Right"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+    </DockPanel>
+</Page>

@@ -1,0 +1,217 @@
+﻿<UserControl x:Class="YouTube_Video_Manager.Controls.PlaylistsTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YouTube_Video_Manager.Controls"
+             mc:Ignorable="d" 
+             Initialized="PlaylistsTabControl_Initialized"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            
+            <local:LoadingSpinner x:Name="PlaylistListLoadingSpinner" Grid.Row="0" Grid.Column="0"/>
+            <local:LoadingSpinner x:Name="VideoListLoadingSpinner" Grid.Row="0" Grid.Column="1"/>
+
+
+            <DockPanel x:Name="PlaylistPanel" Grid.Row="0" Grid.Column="0" >
+
+                <TextBox x:Name="PlaylistSearchBox" FontSize="20" DockPanel.Dock="Top" TextAlignment="Center" Padding="5" TextWrapping="Wrap" TextChanged="PlaylistSearchBox_TextChanged">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label FontSize="20" Content="Search Paylists" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                    <Menu>
+                        <MenuItem Header="Sort">
+                            <MenuItem Header="Alphabetical (A-Z)" />
+                            <MenuItem Header="Alphabetical (Z-A)" />
+                            <Separator />
+                            <MenuItem Header="YouTube Order" />
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
+
+                <ListBox x:Name="PlaylistListBox" ItemsSource="{Binding Playlists}" SelectionChanged="PlaylistListBox_SelectionChanged" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="EditPlaylistMenuItem" Header="Edit Playlist" Click="EditPlaylistMenuItem_Click"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:Name="PlayListItem">
+                            <StackPanel>
+                                <TextBlock x:Name="TitleLabel" Text="{Binding Title}" TextWrapping="Wrap" FontWeight="Bold"/>
+                                <TextBlock x:Name="DescLabel" Text="{Binding ShortDescription}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+            </DockPanel>
+            
+            
+            <DockPanel x:Name="VideoPanel" Grid.Row="0" Grid.Column="1" >
+
+                <TextBox x:Name="VideoSearchBox" FontSize="20" DockPanel.Dock="Top" TextAlignment="Center" Padding="5" TextWrapping="Wrap" TextChanged="VideoSearchBox_TextChanged">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label FontSize="20" Content="Search Videos" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                    <Menu>
+                        <MenuItem Header="Sort">
+                            <MenuItem Header="Alphabetical (A-Z)" />
+                            <MenuItem Header="Alphabetical (Z-A)" />
+                            <Separator />
+                            <MenuItem Header="YouTube Order" />
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
+
+                <ListBox x:Name="VideoListBox" ItemsSource="{Binding Videos}" Grid.Row="1" SelectionChanged="VideoListBox_SelectionChanged" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="EditVideoMenuItem" Header="Edit Video" Click="EditVideoMenuItem_Click"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:Name="VideoListItem">
+                            <StackPanel>
+                                <TextBlock x:Name="TitleLabel" Text="{Binding Title}" TextWrapping="Wrap" FontWeight="Bold"/>
+                                <TextBlock x:Name="DescLabel" Text="{Binding ShortDescription}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </DockPanel>
+
+
+            <!--
+            <Grid x:Name="VideoPanel" Grid.Row="0" Grid.Column="1" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <TextBox x:Name="VideoSearchBox" FontSize="20" Grid.Row="0" TextAlignment="Center" Padding="5" TextWrapping="Wrap" TextChanged="VideoSearchBox_TextChanged">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label FontSize="20" Content="Search Videos" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <ListBox x:Name="VideoListBox" ItemsSource="{Binding Videos}" Grid.Row="1" SelectionChanged="VideoListBox_SelectionChanged" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="EditVideoMenuItem" Header="Edit Video" Click="EditVideoMenuItem_Click"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:Name="VideoListItem">
+                            <StackPanel>
+                                <TextBlock x:Name="TitleLabel" Text="{Binding Title}" TextWrapping="Wrap" FontWeight="Bold"/>
+                                <TextBlock x:Name="DescLabel" Text="{Binding ShortDescription}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+            </Grid>
+        -->
+        </Grid>
+
+        <Grid x:Name="ErrorGrid" MinHeight="75" Height="Auto" VerticalAlignment="Top" Visibility="Collapsed">
+            <Border Background="Red" Opacity="0.8">
+            </Border>
+            <TextBlock x:Name="ErrorText" FontSize="14" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="White">
+                    Error Message
+            </TextBlock>
+        </Grid>
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,37 @@
+﻿<Page x:Class="YouTube_Video_Manager.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:YouTube_Video_Manager.Pages"
+      xmlns:controls="clr-namespace:YouTube_Video_Manager.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+      Title="HomePage">
+    
+    <DockPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Margin="0,2">
+            <Button Name="LogoutButton" Padding="5" Click="LogoutButton_Click">Logout and Close</Button>
+        </StackPanel>
+
+        <TabControl Name="HomePageTabControl">
+            <TabItem Header="Playlists" Padding="5">
+                <controls:PlaylistsTabControl/>
+            </TabItem>
+            <TabItem Header="Home" Padding="5">
+                <Label Content="Content goes here..." />
+            </TabItem>
+            <TabItem Header="Videos" Padding="5">
+                <controls:VideosTabControl/>
+            </TabItem>
+            <TabItem Header="Queue" Padding="5">
+                <Label Content="Content goes here..." />
+            </TabItem>
+            <TabItem Header="Backup and Restore" Padding="5">
+                <Label Content="Content goes here..." />
+            </TabItem>
+        </TabControl>
+
+    </DockPanel>
+</Page>
